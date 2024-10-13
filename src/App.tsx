@@ -117,7 +117,7 @@ function App() {
             Configurações
           </h2>
           <p className="text-center text-lg font-medium text-foreground/90">
-            Configure seu QR CODE aqui!
+            Role para baixo e crie seu QR CODE aqui!
           </p>
           <Form {...form}>
             <form
