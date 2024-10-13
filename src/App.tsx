@@ -23,7 +23,7 @@ import clsx from "clsx";
 
 // import logo from "./assets/logo.png";
 
-import { LucideWifi } from "lucide-react";
+// import { LucideWifi } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -98,12 +98,12 @@ function App() {
       <p
         style={{ color: fgColor }}
         className={clsx(
-          `mb-5 text-center text-3xl font-bold uppercase text-primary`,
-          hidden ? "flex items-center gap-2" : "hidden",
+          `text-center text-3xl font-bold uppercase text-primary`,
+          hidden ? "flex flex-col-reverse items-center gap-1" : "hidden",
         )}
       >
-        APONTE PARA O QR CODE E SE CONECTAR NO WIFI{" "}
-        <LucideWifi style={{ color: fgColor }} className="size-[45px]" />
+        APONTE SEU CELULAR NO QR CODE <br /> PARA SE CONECTAR NO WIFI{" "}
+        {/* <LucideWifi style={{ color: fgColor }} className="size-[45px]" /> */}
       </p>
       <div className="flex flex-col items-center justify-evenly gap-20 md:w-1/2 md:flex-row">
         {/* Form */}
