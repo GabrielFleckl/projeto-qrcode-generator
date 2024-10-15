@@ -90,7 +90,7 @@ function App() {
     setQrcode(qrcode);
   }
   return (
-    <main className="flex flex-col items-center justify-center gap-10 py-10 md:h-screen md:overflow-hidden">
+    <main className="flex flex-col items-center justify-evenly gap-5 md:gap-0 py-10 md:h-screen md:overflow-hidden">
       <div className="flex w-[350px] items-center justify-center">
         <Logo fgColor={fgColor} />
       </div>
@@ -105,32 +105,30 @@ function App() {
         APONTE SEU CELULAR NO QR CODE <br /> PARA SE CONECTAR NO WIFI{" "}
         {/* <LucideWifi style={{ color: fgColor }} className="size-[45px]" /> */}
       </p>
-      <div className="flex flex-col items-center justify-evenly gap-20 md:w-1/2 md:flex-row">
+      <div className="flex flex-col items-center justify-evenly gap-10 md:gap-0 md:w-[80%] md:flex-row">
         {/* Form */}
         <div
-          className={clsx(`flex w-full flex-col gap-3`, hidden ? "hidden" : "")}
+          className={clsx(`flex flex-col md:gap-9 gap-2`, hidden ? "hidden" : "")}
         >
           <h2
             style={{ color: fgColor }}
-            className="text-center text-2xl font-bold text-primary"
+            className="text-start text-2xl font-bold text-primary"
           >
             Configurações
           </h2>
-          <p className="text-center text-lg font-medium text-foreground/90">
-            Role para baixo e crie seu QR CODE aqui!
-          </p>
+          
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col items-center gap-3 overflow-auto p-2 md:h-[340px]"
+              className="flex flex-col gap-2 "
             >
-              <div className="flex w-full flex-col justify-center gap-3">
+              <div className="md:grid md:grid-cols-2 md:gap-2 flex w-full flex-col justify-center">
                 <FormField
                   control={form.control}
                   name="ssid"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nome da rede</FormLabel>
+                      <FormLabel>Nome da rede (SSID)</FormLabel>
                       <FormControl>
                         <Input placeholder="Ex: Nomedowifi123" {...field} />
                       </FormControl>
@@ -221,6 +219,18 @@ function App() {
             </form>
           </Form>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
         {/* QR CODE */}
         <div className="flex h-full flex-col items-center justify-center gap-5">
           <QRCodeCanvas
@@ -237,7 +247,7 @@ function App() {
             }}
           />
           <Button
-            className={clsx(hidden ? "hidden" : "")}
+            className={clsx("w-full", hidden ? "hidden" : "")}
             onClick={handlePrint}
             style={{ backgroundColor: fgColor }}
           >
