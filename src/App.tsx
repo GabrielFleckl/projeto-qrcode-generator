@@ -90,7 +90,7 @@ function App() {
     setQrcode(qrcode);
   }
   return (
-    <main className="flex flex-col items-center justify-evenly gap-5 md:gap-0 py-10 md:h-screen md:overflow-hidden">
+    <main className="flex flex-col items-center justify-evenly gap-5 py-10 md:h-screen md:gap-0 md:overflow-hidden">
       <div className="flex w-[350px] items-center justify-center">
         <Logo fgColor={fgColor} />
       </div>
@@ -99,16 +99,19 @@ function App() {
         style={{ color: fgColor }}
         className={clsx(
           `text-center text-3xl font-bold uppercase text-primary`,
-          hidden ? "flex flex-col-reverse items-center gap-1" : "hidden",
+          hidden ? "flex flex-col-reverse items-center gap-1" : "hidden"
         )}
       >
         APONTE SEU CELULAR NO QR CODE <br /> PARA SE CONECTAR NO WIFI{" "}
         {/* <LucideWifi style={{ color: fgColor }} className="size-[45px]" /> */}
       </p>
-      <div className="flex flex-col items-center justify-evenly gap-10 md:gap-0 md:w-[80%] md:flex-row">
+      <div className="flex flex-col items-center justify-evenly gap-10 md:w-[80%] md:flex-row md:gap-0">
         {/* Form */}
         <div
-          className={clsx(`flex flex-col md:gap-9 gap-2`, hidden ? "hidden" : "")}
+          className={clsx(
+            `flex flex-col gap-2 md:gap-9`,
+            hidden ? "hidden" : ""
+          )}
         >
           <h2
             style={{ color: fgColor }}
@@ -116,13 +119,13 @@ function App() {
           >
             Configurações
           </h2>
-          
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-2 "
+              className="flex flex-col gap-2"
             >
-              <div className="md:grid md:grid-cols-2 md:gap-2 flex w-full flex-col justify-center">
+              <div className="flex w-full flex-col justify-center md:grid md:grid-cols-2 md:gap-2">
                 <FormField
                   control={form.control}
                   name="ssid"
@@ -220,17 +223,6 @@ function App() {
           </Form>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
         {/* QR CODE */}
         <div className="flex h-full flex-col items-center justify-center gap-5">
           <QRCodeCanvas
@@ -260,7 +252,7 @@ function App() {
         style={{ backgroundColor: fgColor }}
         className={clsx(
           `absolute left-5 top-5 hidden transform opacity-0 transition-opacity duration-500 ease-in-out`,
-          hiddenBackBtn ? "opacity-100 md:block" : "",
+          hiddenBackBtn ? "opacity-100 md:block" : ""
         )}
         onClick={handleBackBtn}
       >
