@@ -18,30 +18,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-
 import clsx from "clsx";
-
-// import logo from "./assets/logo.png";
-
-// import { LucideWifi } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Logo from "./components/Logo";
-
-const formSchema = z.object({
-  ssid: z.string().min(2, "No mínimo 2 caracteres"),
-  password: z.string().min(8, "No mínimo 8 caracteres"),
-  encryption: z.string().optional(),
-  image: z.string(),
-});
+const formSchema = z
+  .object({
+    ssid: z.string().min(2, "No mínimo 2 caracteres"),
+    password: z.string(),
+    encryption: z.enum(["WPA2", "WEP", "nopass"]).default("WPA2"),
+    image: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.encryption !== "nopass" && data.password.length < 8) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "No mínimo 8 caracteres",
+        path: ["password"],
+      });
+    }
+  });
 
 function App() {
   const [qrcode, setQrcode] = useState("");
   const [fileURI, setFileURI] = useState("");
-  const [fgColor, setFgColor] = useState("");
+  const [fgColor, setFgColor] = useState("#16a349");
   const [hidden, setHidden] = useState<boolean>(false);
   const [hiddenBackBtn, setHiddenBackBtn] = useState<boolean>(false);
 
@@ -67,11 +70,11 @@ function App() {
 
     setTimeout(() => {
       window.print();
-    }, 2000);
+    }, 300);
 
     setTimeout(() => {
       setHiddenBackBtn(true);
-    }, 4000);
+    }, 2000);
   };
 
   const handleBackBtn = () => {
@@ -90,22 +93,17 @@ function App() {
     setQrcode(qrcode);
   }
   return (
-    <main className="flex flex-col items-center justify-evenly gap-5 py-10 md:h-screen md:gap-0 md:overflow-hidden">
-      <div className="flex w-[350px] items-center justify-center">
-        <Logo fgColor={fgColor} />
-      </div>
-
+    <main className="m-auto flex flex-col items-center justify-center md:h-screen md:gap-0 md:overflow-hidden">
       <p
         style={{ color: fgColor }}
         className={clsx(
           `text-center text-3xl font-bold uppercase text-primary`,
-          hidden ? "flex flex-col-reverse items-center gap-1" : "hidden"
+          hidden ? "mb-8 flex flex-col-reverse items-center gap-1" : "hidden"
         )}
       >
         APONTE SEU CELULAR NO QR CODE <br /> PARA SE CONECTAR NO WIFI{" "}
-        {/* <LucideWifi style={{ color: fgColor }} className="size-[45px]" /> */}
       </p>
-      <div className="flex flex-col items-center justify-evenly gap-10 md:w-[80%] md:flex-row md:gap-0">
+      <div className="flex max-w-5xl flex-col items-end justify-between gap-10 md:flex-row md:gap-0">
         {/* Form */}
         <div
           className={clsx(
@@ -115,7 +113,7 @@ function App() {
         >
           <h2
             style={{ color: fgColor }}
-            className="text-start text-2xl font-bold text-primary"
+            className="text-start text-3xl font-bold text-primary"
           >
             Configurações
           </h2>
@@ -147,7 +145,11 @@ function App() {
                     <FormItem>
                       <FormLabel>Senha</FormLabel>
                       <FormControl>
-                        <Input placeholder="Ex: 99823212" {...field} />
+                        <Input
+                          disabled={form.watch("encryption") === "nopass"}
+                          placeholder="Ex: 99823212"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>Mínimo de 8 caracteres</FormDescription>
 
@@ -214,7 +216,7 @@ function App() {
               </div>
               <Button
                 style={{ backgroundColor: fgColor }}
-                className="m-auto w-full"
+                className="m-auto mt-4 w-full"
                 type="submit"
               >
                 Criar QR
@@ -224,7 +226,7 @@ function App() {
         </div>
 
         {/* QR CODE */}
-        <div className="flex h-full flex-col items-center justify-center gap-5">
+        <div className="flex flex-col items-center justify-center gap-5">
           <QRCodeCanvas
             value={qrcode}
             size={328}
