@@ -1,5 +1,5 @@
 <h1 align="center">
-  Gigaweb QR Code 
+  QR code Generator
 </h1>
 
 ## 🎨 Layout
