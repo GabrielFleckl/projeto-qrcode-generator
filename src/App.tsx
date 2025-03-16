@@ -93,7 +93,7 @@ function App() {
     setQrcode(qrcode);
   }
   return (
-    <main className="m-auto flex flex-col items-center justify-center md:h-screen md:gap-0 md:overflow-hidden">
+    <main className="m-auto flex flex-col py-10 items-center justify-center md:h-screen md:gap-0 md:overflow-hidden">
       <p
         style={{ color: fgColor }}
         className={clsx(
